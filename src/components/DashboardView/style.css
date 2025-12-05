@@ -1,0 +1,125 @@
+.space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.timeline {
+  width: calc(100% - 30px);
+  background-color: var(--timeline);
+  opacity: .5;
+  height: 2px;
+  border-radius: 2px;
+  position: absolute;
+}
+
+.itemBox {
+  display: flex;
+  position: absolute;
+  left: 30px;
+  padding-right: 30px;
+  top: 50%;
+  gap: 1vw;
+  align-items: start;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  --primaryColor: var(--finished);
+  align-items: center;
+  gap: 6vh;
+  transform: translateY(calc(2 * -2vh - 2 * 1vh - 10vh - 6vh - 3vh - 1.2vh));
+  /* 2 * 里程碑外边距 - 2 * 里程碑边框 - 里程碑字体 - gap - 半圆高 - 半圆边框 */
+}
+
+.milestone {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+  font-size: 10vh;
+  border-radius: 11vh;
+  border: 1vh solid;
+  padding: 2vh 10vh;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.circle {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 11vh;
+  border: 2.4vh solid var(--primaryColor);
+  background-color: var(--bg-body);
+}
+
+.state {
+  font-size: 10vh;
+  color: var(--primaryColor);
+  white-space: nowrap;
+}
+
+.datetime {
+  font-size: 9vh;
+  color: var(--datetime);
+  white-space: nowrap;
+}
+
+/* Config-specific styles */
+.config .item {
+  gap: 1.5vh;
+  /* Converted from 5.775vh */
+  transform: translateY(calc(2 * -0.5vh - 2 * 0.3vh - 2.5vh - 1.5vh - 0.75vh - 0.25vh));
+  /* 2 * milestone margin - 2 * milestone border - milestone font - gap - half-circle height - half-circle border */
+}
+
+.config .milestone {
+  font-size: 2.5vh;
+  /* Converted from 11.165vh */
+  border-radius: 2.5vh;
+  /* Converted from 11vh */
+  border: 0.25vh solid;
+  /* Converted from 1vh */
+  padding: 0.5vh 2.5vh;
+  /* Converted from 5.5vh 11vh */
+}
+
+.config .circle {
+  width: 1.5vh;
+  /* Converted from 11vh */
+  height: 1.5vh;
+  /* Converted from 11vh */
+  border-radius: 1.5vh;
+  /* Converted from 11vh */
+  border: 0.6vh solid var(--primaryColor);
+  /* Converted from 2vh */
+}
+
+.config .state {
+  font-size: 2.5vh;
+  /* Converted from 11.22vh */
+}
+
+.config .datetime {
+  font-size: 2.25vh;
+  /* Converted from 11.22vh */
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .text {
+    color: var(--text-caption);
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

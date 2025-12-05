@@ -1,0 +1,48 @@
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.titlet {
+  display: inline;
+  position: relative;
+}
+
+
+.select {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.prompt {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-shallow);
+}
+
+.subContainer {
+  display: flex;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.subPrompt {
+  padding-right: 8px;
+  color: var(--text-shallow-2);
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.subInput {
+  flex-grow: 0;
+}
+
+.help {
+  font-size: 14px;
+  position: absolute;
+  transform: translateY(-100%);
+  width: 100px;
+  margin-top: 16px;
+  color: rgb(20, 86, 240);
+  text-decoration: none;
+}
