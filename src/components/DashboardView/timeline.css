@@ -7,11 +7,62 @@
   box-sizing: border-box;
 }
 
+/* Size Variants */
+.size-small .timeline-item { margin-bottom: 24px; }
+.size-small .timeline-content { padding: 0 20px; }
+.size-medium .timeline-item { margin-bottom: 40px; }
+.size-large .timeline-item { margin-bottom: 56px; }
+.size-x-small .timeline-item { margin-bottom: 16px; }
+.size-x-large .timeline-item { margin-bottom: 72px; }
+
+.size-small .timeline-node { width: 12px; height: 12px; border-width: 2px; }
+.size-medium .timeline-node { width: 16px; height: 16px; border-width: 3px; }
+.size-large .timeline-node { width: 20px; height: 20px; border-width: 4px; }
+.size-x-small .timeline-node { width: 10px; height: 10px; border-width: 2px; }
+.size-x-large .timeline-node { width: 22px; height: 22px; border-width: 4px; }
+
+.size-small .timeline-event { padding: 10px 12px; max-width: 300px; }
+.size-medium .timeline-event { padding: 12px 16px; max-width: 340px; }
+.size-large .timeline-event { padding: 14px 18px; max-width: 380px; }
+.size-x-small .timeline-event { padding: 8px 10px; max-width: 280px; }
+.size-x-large .timeline-event { padding: 16px 20px; max-width: 420px; }
+
+.size-small .timeline-event-name { font-size: 12px; }
+.size-medium .timeline-event-name { font-size: 14px; }
+.size-large .timeline-event-name { font-size: 16px; }
+.size-x-small .timeline-event-name { font-size: 11px; }
+.size-x-large .timeline-event-name { font-size: 18px; }
+
+.size-small .timeline-event-time { font-size: 11px; }
+.size-medium .timeline-event-time { font-size: 12px; }
+.size-large .timeline-event-time { font-size: 13px; }
+.size-x-small .timeline-event-time { font-size: 10px; }
+.size-x-large .timeline-event-time { font-size: 14px; }
+
+.size-small .timeline-event-status { font-size: 11px; }
+.size-medium .timeline-event-status { font-size: 12px; }
+.size-large .timeline-event-status { font-size: 13px; }
+.size-x-small .timeline-event-status { font-size: 10px; }
+.size-x-large .timeline-event-status { font-size: 14px; }
+
 .timeline-vertical {
   position: relative;
   max-width: 800px;
   margin: 0 auto;
 }
+
+.timeline-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.mode-horizontal .timeline-item:nth-child(odd) { flex-direction: row; }
+.mode-full .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
+
+.mode-horizontal.spacing-tight .timeline-horizontal { gap: 20px; }
+.mode-horizontal.spacing-medium .timeline-horizontal { gap: 32px; }
+.mode-horizontal.spacing-loose .timeline-horizontal { gap: 48px; }
 
 .timeline-line {
   position: absolute;
@@ -144,3 +195,47 @@
   font-size: 14px;
   line-height: 22px;
 }
+
+/* Spacing Variants (override size spacing) */
+.spacing-tight .timeline-item { margin-bottom: 20px !important; }
+.spacing-medium .timeline-item { margin-bottom: 40px !important; }
+.spacing-loose .timeline-item { margin-bottom: 64px !important; }
+.spacing-x-tight .timeline-item { margin-bottom: 12px !important; }
+.spacing-x-loose .timeline-item { margin-bottom: 80px !important; }
+.timeline-horizontal {
+  position: relative;
+  padding: 20px 20px 24px 20px;
+  min-height: 180px;
+  overflow-x: auto;
+}
+.timeline-hline { display: none; }
+.timeline-horizontal-items {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-top: 28px;
+}
+.timeline-horizontal-items::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(204,204,204,0) 0%, var(--timeline) 10%, var(--timeline) 90%, rgba(204,204,204,0) 100%);
+}
+.mode-horizontal.spacing-tight .timeline-horizontal-items { gap: 20px; }
+.mode-horizontal.spacing-medium .timeline-horizontal-items { gap: 32px; }
+.mode-horizontal.spacing-loose .timeline-horizontal-items { gap: 48px; }
+.mode-horizontal.spacing-x-tight .timeline-horizontal-items { gap: 12px; }
+.mode-horizontal.spacing-x-loose .timeline-horizontal-items { gap: 80px; }
+
+.h-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.h-item .timeline-event { margin-top: 28px; }
+.h-node { position: relative; margin-top: -10px; }

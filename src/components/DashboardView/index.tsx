@@ -170,7 +170,7 @@ export function DashboardView(props: any) {
 
   return (
     <>
-      <TimelineComponent data={timelineData} t={t} />
+      <TimelineComponent data={timelineData} t={t} size={effectiveConfig?.fontSize || 'medium'} spacing={effectiveConfig?.spacing || 'medium'} mode={effectiveConfig?.displayMode || 'vertical'} statusMode={effectiveConfig?.statusMode || 'none'} />
       {hasMore && (
         <div style={{ textAlign: 'center', padding: '20px' }}>
           <span style={{ color: 'var(--text-caption)', fontSize: '12px' }}>

@@ -21,6 +21,10 @@ export default function Dashboard() {
     eventFieldId: null,
     completeTimeFieldId: null,
     baseToken: null,
+    fontSize: 'medium',
+    spacing: 'medium',
+    displayMode: 'vertical',
+    statusMode: 'none',
   })
   const [dashboard, setDashboard] = useState<IDashboard>(dashboardSdk)
   const isLocalDev = typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)/.test(window.location.hostname);
@@ -76,6 +80,10 @@ export default function Dashboard() {
         eventFieldId: null,
         completeTimeFieldId: null,
         baseToken: null,
+        fontSize: 'medium',
+        spacing: 'medium',
+        displayMode: 'vertical',
+        statusMode: 'none',
       })
     }
   }, [i18n.language, isCreate])
@@ -105,7 +113,7 @@ export default function Dashboard() {
   useConfig(updateConfig)
 
   return (
-    <main style={isConfig ? {backgroundColor: "var(--cbgc)"} : { borderTop: 'none' ,backgroundColor: "var(--cbgc)"}}>
+    <main className={isConfig ? 'cfg-on' : ''} style={isConfig ? {backgroundColor: "var(--cbgc)"} : { borderTop: 'none' ,backgroundColor: "var(--cbgc)"}}>
       <div className='layout-view' >
         <_DashboardView
           t={t}
@@ -198,6 +206,7 @@ function ConfigPanel(props: {
         />
       </div>
       <div className="layout-cfg-btn">
+        <a href="https://bytedance.larkoffice.com/wiki/Vchyw69Zniiq4SkayVcczmf3nXl?renamingWikiNode=false" target="_blank" rel="noopener noreferrer" className="helpLinkBottom">{t('帮助文档')}</a>
         <Button type='primary' theme='solid' size='large' className='confirmButton' onClick={onSaveConfig}>{t('button.confirm')}</Button>
       </div>
     </>

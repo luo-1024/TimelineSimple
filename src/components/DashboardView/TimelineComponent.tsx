@@ -10,6 +10,10 @@ interface TimelineItem {
 interface TimelineComponentProps {
   data: TimelineItem[];
   t: any;
+  size?: 'small' | 'medium' | 'large';
+  spacing?: 'tight' | 'medium' | 'loose';
+  mode?: 'horizontal' | 'vertical';
+  statusMode?: 'none' | 'completion' | 'remainingDays';
 }
 
 const stateStyleConfig = {
@@ -40,7 +44,7 @@ function abbrText(text: string) {
   return text;
 }
 
-export const TimelineComponent: React.FC<TimelineComponentProps> = ({ data, t }) => {
+export const TimelineComponent: React.FC<TimelineComponentProps> = ({ data, t, size = 'medium', spacing = 'medium', mode = 'vertical', statusMode = 'none' }) => {
   if (!data || data.length === 0) {
     return (
       <div className="timeline-empty">
@@ -49,13 +53,57 @@ export const TimelineComponent: React.FC<TimelineComponentProps> = ({ data, t })
       </div>
     );
   }
-
+  const containerClass = `timeline-container size-${size} spacing-${spacing} mode-${mode}`;
+  const neutralStyle = { color: 'var(--datetime)', background: 'var(--bg-unfinished)', text: '', icon: '•' } as const;
+  const daysLeft = (time: number) => {
+    const now = Date.now();
+    const diff = Math.ceil((time - now) / (24 * 60 * 60 * 1000));
+    return diff > 0 ? diff : 0;
+  };
+  if (mode === 'horizontal') {
+    return (
+      <div className={containerClass}>
+        <div className="timeline-horizontal">
+          <div className="timeline-hline"></div>
+          <div className="timeline-horizontal-items">
+            {data.map((item, index) => {
+              const stateStyle = statusMode === 'none' ? neutralStyle : stateStyleConfig[item.status];
+              return (
+                <div key={index} className="h-item">
+                  <div className="timeline-node h-node" style={{ borderColor: stateStyle.color, backgroundColor: 'var(--bg-body)' }}>
+                    <span className="status-icon" style={{ color: stateStyle.color }}>{stateStyle.icon}</span>
+                  </div>
+                  <div className="timeline-event" style={{ borderColor: stateStyle.color, backgroundColor: stateStyle.background }}>
+                    <div className="timeline-event-name" style={{ color: stateStyle.color }}>
+                      {item.eventName.length > 50 ? (
+                        <Tooltip content={item.eventName} position="top">
+                          <span>{abbrText(item.eventName)}</span>
+                        </Tooltip>
+                      ) : (
+                        item.eventName
+                      )}
+                    </div>
+                    <div className="timeline-event-time">{formatTime(item.completeTime)}</div>
+                    {statusMode === 'completion' ? (
+                      <div className="timeline-event-status" style={{ color: stateStyle.color }}>{stateStyle.text}</div>
+                    ) : statusMode === 'remainingDays' && item.status === 'unfinished' ? (
+                      <div className="timeline-event-status" style={{ color: stateStyle.color }}>{t('status.remainingDaysText', { days: daysLeft(item.completeTime) })}</div>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="timeline-container">
+    <div className={containerClass}>
       <div className="timeline-vertical">
         <div className="timeline-line"></div>
         {data.map((item, index) => {
-          const stateStyle = stateStyleConfig[item.status];
+          const stateStyle = statusMode === 'none' ? neutralStyle : stateStyleConfig[item.status];
           return (
             <div key={index} className="timeline-item">
               <div className="timeline-content">
@@ -78,15 +126,12 @@ export const TimelineComponent: React.FC<TimelineComponentProps> = ({ data, t })
                       item.eventName
                     )}
                   </div>
-                  <div className="timeline-event-time">
-                    {formatTime(item.completeTime)}
-                  </div>
-                  <div 
-                    className="timeline-event-status" 
-                    style={{ color: stateStyle.color }}
-                  >
-                    {stateStyle.text}
-                  </div>
+                  <div className="timeline-event-time">{formatTime(item.completeTime)}</div>
+                  {statusMode === 'completion' ? (
+                    <div className="timeline-event-status" style={{ color: stateStyle.color }}>{stateStyle.text}</div>
+                  ) : statusMode === 'remainingDays' && item.status === 'unfinished' ? (
+                    <div className="timeline-event-status" style={{ color: stateStyle.color }}>{t('status.remainingDaysText', { days: daysLeft(item.completeTime) })}</div>
+                  ) : null}
                 </div>
               </div>
               <div 

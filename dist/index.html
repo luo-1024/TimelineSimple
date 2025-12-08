@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Base Script</title>
     <script>
+  (function () {
+    try {
+      if (window.location.hostname === 'localhost') {
+        var url = window.location.href.replace('localhost', '127.0.0.1');
+        window.location.replace(url);
+        return;
+      }
+    } catch (e) {}
+  })();
   function isMobileLark() {
     const ua = window.navigator.userAgent;
     const isLark = /feishu/i.test(ua) || /lark/i.test(ua);
@@ -24,8 +33,8 @@
   }
 
 </script>
-    <script type="module" crossorigin src="./assets/index-pAiGyp6w.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DqFwpSjF.css">
+    <script type="module" crossorigin src="./assets/index-CT2oTCMJ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-sr5QqPk1.css">
   </head>
   <body>
     <div id="root"></div>

@@ -11,6 +11,7 @@ main {
     position: relative;
     flex: 1;
     height: 100%;
+    overflow: auto;
 }
 
 .layout-cfg {
@@ -35,6 +36,15 @@ main {
     position: relative;
 }
 
+.helpLinkBottom {
+    position: absolute;
+    top: 22px;
+    left: 16px;
+    font-size: 14px;
+    color: rgb(20, 86, 240);
+    text-decoration: none;
+}
+
 .confirmButton {
     position: absolute;
     top: 16px;
@@ -46,4 +56,18 @@ main {
 .view {
     width: 100%;
     height: 100%;
+}
+.cfg-on .layout-cfg {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 340px;
+    border-left: .5px solid var(--boarder-config);
+    background: var(--cbgc);
+    overflow: auto;
+}
+
+.cfg-on .layout-view {
+    margin-right: 340px;
 }

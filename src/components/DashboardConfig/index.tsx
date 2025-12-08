@@ -42,6 +42,14 @@ function DashboardConfig(props: any, ref: any) {
   const [completeTimeFieldId, setCompleteTimeFieldId] = useState(null) as any;
   const [tableLoading, setTableLoading] = useState(false);
   const [isPreviewUpdating, setIsPreviewUpdating] = useState(false);
+  type FontSize = 'x-small' | 'small' | 'medium' | 'large' | 'x-large';
+  type SpacingSize = 'x-tight' | 'tight' | 'medium' | 'loose' | 'x-loose';
+  type DisplayMode = 'horizontal' | 'vertical';
+  type StatusMode = 'none' | 'completion' | 'remainingDays';
+  const [fontSize, setFontSize] = useState<FontSize>('medium');
+  const [spacing, setSpacing] = useState<SpacingSize>('medium');
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('vertical');
+  const [statusMode, setStatusMode] = useState<StatusMode>('none');
 
   // 防抖处理配置变更
   const debouncedPreviewUpdate = useCallback(
@@ -106,19 +114,22 @@ function DashboardConfig(props: any, ref: any) {
   if (config)
     useEffect(() => {
       if (selectedTableId && eventFieldId && completeTimeFieldId) {
-        // 防抖处理实时预览更新
         setIsPreviewUpdating(true);
         debouncedPreviewUpdate({
           eventFieldId: eventFieldId,
           completeTimeFieldId: completeTimeFieldId,
           selectedTableId: selectedTableId,
+          fontSize: fontSize,
+          spacing: spacing,
+          displayMode: displayMode,
+          statusMode: statusMode,
         })
       }
-    }, [selectedTableId, eventFieldId, completeTimeFieldId, debouncedPreviewUpdate]);
+    }, [selectedTableId, eventFieldId, completeTimeFieldId, fontSize, spacing, displayMode, statusMode, debouncedPreviewUpdate]);
 
   useEffect(() => {
     if (isInited) return;
-    if (isCreate) { // 创建状态时设置默认值
+    if (isCreate) {
       (async () => {
         if (!bitable) return
         const tables = await bitable.base.getTableList();
@@ -144,12 +155,16 @@ function DashboardConfig(props: any, ref: any) {
 
       })();
     }
-    if (!config?.selectedTableId) return; // 配置状态时使用config值
+    if (!config?.selectedTableId) return;
     if (config.selectedTableId) setSelectedTableId(config.selectedTableId);
     dashboard.getCategories(config.selectedTableId).then((e: any) => {
       setFieldList(e)
       if (config.eventFieldId) setEventFieldId(config.eventFieldId);
       if (config.completeTimeFieldId) setCompleteTimeFieldId(config.completeTimeFieldId);
+      if (config.fontSize) setFontSize(config.fontSize);
+      if (config.spacing) setSpacing(config.spacing);
+      if (config.displayMode) setDisplayMode(config.displayMode);
+      if (config.statusMode) setStatusMode(config.statusMode);
       isInited = true
     })
   }, [dashboard, bitable])
@@ -184,6 +199,10 @@ function DashboardConfig(props: any, ref: any) {
         eventFieldId: eventFieldId,
         completeTimeFieldId: completeTimeFieldId,
         selectedTableId: selectedTableId,
+        fontSize: fontSize,
+        spacing: spacing,
+        displayMode: displayMode,
+        statusMode: statusMode,
       }
       setConfig({ ...config, ...cfg })
 
@@ -216,11 +235,61 @@ function DashboardConfig(props: any, ref: any) {
 
         <FieldSelect t={t} fieldList={fieldList} promptTKey='field.event' fieldId={eventFieldId} setFieldId={setEventFieldId} fieldType={FieldType.Text} placeholder="placeholder.pleaseSelectField" mutuallyExclusiveId={null} tableLoading={tableLoading}></FieldSelect>
         <FieldSelect t={t} fieldList={fieldList} promptTKey='field.completeTime' fieldId={completeTimeFieldId} setFieldId={setCompleteTimeFieldId} fieldType={FieldType.DateTime} placeholder="placeholder.pleaseSelectDateField" mutuallyExclusiveId={null} tableLoading={tableLoading}></FieldSelect>
-        <div className="title">
-          <div className="titlet">
-            <a className="help" href="https://wingahead.feishu.cn/wiki/NjoJwa38WidGiikx8i2cyUeKnsd?from=from_copylink" target="_blank" rel="noopener noreferrer">帮助文档</a>
-          </div>
-        </div>
+        
+      <div className="prompt">{t('display.size')}</div>
+      <Select
+        placeholder={t('display.size')}
+        className="select"
+        optionList={[
+          { label: t('size.xsmall'), value: 'x-small' },
+          { label: t('size.small'), value: 'small' },
+          { label: t('size.medium'), value: 'medium' },
+          { label: t('size.large'), value: 'large' },
+          { label: t('size.xlarge'), value: 'x-large' },
+        ]}
+        onChange={(e) => { setFontSize(e as FontSize) }}
+        value={fontSize}
+      ></Select>
+
+      <div className="prompt">{t('display.spacing')}</div>
+      <Select
+        placeholder={t('display.spacing')}
+        className="select"
+        optionList={[
+          { label: t('spacing.xtight'), value: 'x-tight' },
+          { label: t('spacing.tight'), value: 'tight' },
+          { label: t('spacing.medium'), value: 'medium' },
+          { label: t('spacing.loose'), value: 'loose' },
+          { label: t('spacing.xloose'), value: 'x-loose' },
+        ]}
+        onChange={(e) => { setSpacing(e as SpacingSize) }}
+        value={spacing}
+      ></Select>
+
+      <div className="prompt">{t('display.mode')}</div>
+      <Select
+        placeholder={t('display.mode')}
+        className="select"
+        optionList={[
+          { label: t('mode.vertical'), value: 'vertical' },
+          { label: t('mode.horizontal'), value: 'horizontal' },
+        ]}
+        onChange={(e) => { setDisplayMode(e as DisplayMode) }}
+        value={displayMode}
+      ></Select>
+
+      <div className="prompt">{t('display.status')}</div>
+      <Select
+        placeholder={t('display.status')}
+        className="select"
+        optionList={[
+          { label: t('status.none'), value: 'none' },
+          { label: t('status.completion'), value: 'completion' },
+          { label: t('status.remainingDays'), value: 'remainingDays' },
+        ]}
+        onChange={(e) => { setStatusMode(e as StatusMode) }}
+        value={statusMode}
+      ></Select>
       </div>
     </>
   )
