@@ -23,7 +23,6 @@ function FieldSelect({ t, fieldList, promptTKey, fieldId, setFieldId, fieldType,
       setFieldId(e)
     }} value={fieldId}
     disabled={tableLoading}
-    renderSelectedItem={tableLoading ? () => <Spin /> : undefined}
     ></Select >
   </>
   )
@@ -229,7 +228,6 @@ function DashboardConfig(props: any, ref: any) {
           value={selectedTableId} 
           onSelect={onSelect}
           disabled={tableLoading}
-          renderSelectedItem={tableLoading ? () => <Spin /> : undefined}
         >
         </Select>
 

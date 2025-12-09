@@ -32,23 +32,25 @@ main {
 }
 
 .layout-cfg-btn {
-    flex: 0 70px;
+    flex: 0 80px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 16px;
+    gap: 12px;
 }
 
 .helpLinkBottom {
-    position: absolute;
-    top: 22px;
-    left: 16px;
+    position: static;
+    margin-right: auto;
     font-size: 14px;
     color: rgb(20, 86, 240);
     text-decoration: none;
 }
 
 .confirmButton {
-    position: absolute;
-    top: 16px;
-    right: 16px;
+    position: static;
     height: 38px;
     width: 100px;
 }

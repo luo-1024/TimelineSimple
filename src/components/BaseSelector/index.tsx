@@ -250,7 +250,7 @@ const BaseSelector = (props: {
           width: "100%",
         }}
         showClear={false}
-        loading={isInitialLoading}
+        loading={false}
         disabled={isInitialLoading}
         value={showBaseName ? currentBaseToken : ""}
         onListScroll={handleScroll}
@@ -259,14 +259,13 @@ const BaseSelector = (props: {
         onDropdownVisibleChange={onVisibleChange}
         renderSelectedItem={() => {
           const currentBase = cacheCurBases.find((base) => base.token === currentBaseToken);
-          if(!currentBase) {
-            return <Spin />;
-          }
+          const optName = currentBase?.name ?? t("请选择多维表格");
+          const url = currentBase?.url ?? "";
           return (
             <DataSourceOption
-              url={currentBase?.url ?? ""}
-              optName={currentBase?.name ?? ""}
-              isLabel={currentBase?.token === currentBaseToken}
+              url={url}
+              optName={optName}
+              isLabel={!!currentBase && currentBase?.token === currentBaseToken}
             />
           );
         }}
